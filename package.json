@@ -35,7 +35,6 @@
     "react": "^15.6.2 || ^16.0.0"
   },
   "devDependencies": {
-    "@textpress/gulp-bump-version": "^0.3.0",
     "babel-cli": "^6.24.0",
     "babel-eslint": "^7.2.1",
     "babel-plugin-transform-react-jsx": "^6.23.0",
@@ -61,6 +60,7 @@
     "sinon-chai": "^2.9.0"
   },
   "dependencies": {
+    "@textpress/gulp-bump-version": "^0.4.0",
     "prop-types": "15.6.0"
   }
 }
