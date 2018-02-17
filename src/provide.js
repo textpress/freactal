@@ -36,6 +36,10 @@ export class BaseStatefulComponent extends Component {
       () => {};
   }
 
+  componentWillReceiveProps (newProps) {
+    if (this.effects.willRecieveProps) { this.effects.willRecieveProps(newProps); }
+  }
+
   componentWillUnmount () {
     // this.unsubscribe may be undefined due to an error in child render
     if (this.unsubscribe) {

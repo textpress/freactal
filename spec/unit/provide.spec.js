@@ -24,6 +24,22 @@ describe("state provider", () => {
     });
   });
 
+  it("calls its `willRecieveProps` effect when it receives new props", () => {
+    return new Promise(resolve => {
+      const cxt = {
+        effects: {
+          willRecieveProps: (effects, newProps) => state => (resolve(newProps), state)
+        }
+      };
+      const Stateful = getStateful(cxt);
+      const el = mount(<Stateful a="a" b="b" />);
+      el.setProps({ a: "c" });
+    }).then((...args) => {
+      expect(args).to.deep.equal([{ a: "c", b: "b" }]);
+    });
+  });
+
+
   describe("upon mounting", () => {
     it("invokes its `initialize` effect", () => {
       return new Promise(resolve => {
