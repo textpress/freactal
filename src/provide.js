@@ -37,7 +37,7 @@ export class BaseStatefulComponent extends Component {
   }
 
   componentWillReceiveProps (newProps) {
-    if (this.effects.willRecieveProps) { this.effects.willRecieveProps(newProps); }
+    if (this.effects.willRecieveProps) { this.effects.willRecieveProps(newProps, this.props); }
   }
 
   componentWillUnmount () {

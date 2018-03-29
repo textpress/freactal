@@ -28,14 +28,16 @@ describe("state provider", () => {
     return new Promise(resolve => {
       const cxt = {
         effects: {
-          willRecieveProps: (effects, newProps) => state => (resolve(newProps), state)
+          willRecieveProps: (effects, newProps, oldProps) =>
+            state => (resolve({ newProps, oldProps }), state)
         }
       };
       const Stateful = getStateful(cxt);
       const el = mount(<Stateful a="a" b="b" />);
       el.setProps({ a: "c" });
-    }).then((...args) => {
-      expect(args).to.deep.equal([{ a: "c", b: "b" }]);
+    }).then(({ newProps, oldProps }) => {
+      expect(newProps).to.deep.equal({ a: "c", b: "b" });
+      expect(oldProps).to.deep.equal({ a: "a", b: "b" });
     });
   });
 
