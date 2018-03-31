@@ -8,7 +8,14 @@ const Child = ({ state }) => (
   <div className="child-value">{ state.toggleMe ? "true" : "false" }</div>
 );
 const ChildWithState = injectState(Child);
-const wrapChildWithState = provideState({});
+const wrapChildWithState = provideState({
+  initialState: () => ({
+    overridden: true
+  }),
+  computed: {
+    isOverridden: ({ overridden }) => overridden
+  }
+});
 const StatefulChild = wrapChildWithState(ChildWithState);
 
 const Parent = ({ state: { toggleMe }, children }) => (
@@ -26,7 +33,8 @@ const Root = () => (
 );
 const wrapRootWithState = provideState({
   initialState: () => ({
-    toggleMe: true
+    toggleMe: true,
+    overridden: false
   }),
   effects: {
     toggle: softUpdate(state => ({ toggleMe: !state.toggleMe }))
@@ -45,4 +53,3 @@ describe("nested state injections", () => {
     expect(el.find(".child-value").text()).to.equal("false");
   });
 });
-

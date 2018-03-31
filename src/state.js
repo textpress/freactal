@@ -55,7 +55,8 @@ export class StateContainer {
     const { cachedState, getTrackedState, computed } = this;
 
     const computedKeys = Object.keys(computed);
-    const accessibleKeys = [].concat(computedKeys, Object.keys(stateWithComputed), parentKeys);
+    const accessibleKeys =
+      [ ...(new Set([].concat(computedKeys, Object.keys(stateWithComputed), parentKeys))) ];
 
     computedKeys.forEach(computedKey => {
       const trackedState = getTrackedState(computedKey, stateWithComputed, accessibleKeys);
