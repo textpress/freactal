@@ -5,7 +5,10 @@ import { provideState, injectState, softUpdate } from "freactal";
 
 
 const Child = ({ state }) => (
-  <div className="child-value">{ state.toggleMe ? "true" : "false" }</div>
+  <div>
+    <div className="child-value">{ state.toggleMe ? "true" : "false" }</div>
+    <div className="child-computed">{ state.isOverridden ? "true" : "false" }</div>
+  </div>
 );
 const ChildWithState = injectState(Child);
 const wrapChildWithState = provideState({
@@ -51,5 +54,6 @@ describe("nested state injections", () => {
     await el.instance().effects.toggle();
     expect(el.find(".parent-value").text()).to.equal("false");
     expect(el.find(".child-value").text()).to.equal("false");
+    expect(el.find(".child-computed").text()).to.equal("true");
   });
 });
