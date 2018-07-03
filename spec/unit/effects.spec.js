@@ -87,4 +87,35 @@ describe("effects", () => {
 
     expect(state).to.have.property("data", "data!");
   });
+
+  it("can return an async reducer", async () => {
+    let state = { loading: 0, data: { id: 1, value: null } };
+    const hocState = {
+      setState: sinon.spy(newState => Promise.resolve(hocState.state = state = newState)),
+      state
+    };
+
+    const getData = () => Promise.resolve({ data: { id: 1, value: "data!" } });
+
+    const effects = getEffects(hocState, {
+      getData: async ({ setLoading }) => {
+        await setLoading(true);
+        expect(state).to.have.property("loading", 1);
+        expect(state.data).to.deep.equal({ id: 1, value: null });
+        return async oldState => {
+          const { data: { id } } = oldState;
+          const { data } = await getData(id);
+          await setLoading(false);
+          expect(state).to.have.property("loading", 0);
+          return Object.assign({}, oldState, { data });
+        };
+      },
+      setLoading: ({ loading }, isStarting) => oldState =>
+      Object.assign({}, oldState, { loading: oldState.loading + (isStarting ? 1 : -1) })
+    });
+
+    await effects.getData();
+
+    expect(state.data).to.deep.equal({ id: 1, value: "data!" });
+  });
 });
