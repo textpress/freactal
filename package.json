@@ -3,6 +3,8 @@
   "version": "2.4.2",
   "description": "",
   "main": "lib/index.js",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
   "scripts": {
     "build": "rm -rf lib/ && yarn run build-lib",
     "build-lib": "babel -d lib/ src/",
@@ -18,7 +20,9 @@
   },
   "repository": "github:textpress/freactal",
   "files": [
-    "lib"
+    "es",
+    "lib",
+    "umd"
   ],
   "keywords": [
     "react",
@@ -28,9 +32,9 @@
   "author": "Dale Bustad <dale@divmain.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/divmain/freactal/issues"
+    "url": "https://github.com/FormidableLabs/freactal/issues"
   },
-  "homepage": "https://github.com/divmain/freactal#readme",
+  "homepage": "https://github.com/FormidableLabs/freactal#readme",
   "peerDependencies": {
     "react": "^15.6.2 || ^16.0.0"
   },
@@ -38,7 +42,9 @@
     "@textpress/gulp-bump-version": "^0.5.0",
     "babel-cli": "^6.24.0",
     "babel-eslint": "^7.2.1",
+    "babel-plugin-external-helpers": "^6.22.0",
     "babel-plugin-transform-react-jsx": "^6.23.0",
+    "babel-plugin-transform-react-remove-prop-types": "^0.4.10",
     "babel-preset-env": "^1.6.0",
     "chai": "^3.5.0",
     "chai-enzyme": "1.0.0-beta.0",
@@ -63,11 +69,17 @@
     "react": "15.6.2",
     "react-dom": "15.6.2",
     "react-test-renderer": "^15.5.4",
+    "rollup": "^0.52.0",
+    "rollup-plugin-babel": "^3.0.2",
+    "rollup-plugin-commonjs": "^8.2.6",
+    "rollup-plugin-node-resolve": "^3.0.2",
+    "rollup-plugin-uglify": "^2.0.1",
     "sinon": "^2.1.0",
     "sinon-chai": "^2.9.0",
     "yargs": "^11.0.0"
   },
   "dependencies": {
     "prop-types": "15.6.0"
-  }
+  },
+  "sideEffects": false
 }
